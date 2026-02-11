@@ -11,7 +11,7 @@ public class PageOrder {
     private final WebDriver driver;
 
     // локаторы первой страницы заказа
-    private final By TopOrderButton = By.className("Button_Button__ra12g"); // Верхняя кнопка Заказать
+    private final By TopOrderButton = By.className("Button_Button__ra12g"); // Верхняя кнопка Заказать на главной странице
     private final By nameField = By.xpath("//input[@placeholder='* Имя']"); // Поле Имя
     private final By lastNameField = By.xpath("//input[@placeholder='* Фамилия']"); // Поле Фамилия
     private final By addressField = By.xpath("//input[@placeholder='* Адрес: куда привезти заказ']"); // Поле адреса
