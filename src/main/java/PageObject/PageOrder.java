@@ -12,7 +12,6 @@ public class PageOrder {
 
     // локаторы первой страницы заказа
     private final By TopOrderButton = By.className("Button_Button__ra12g"); // Верхняя кнопка Заказать
-    private final By MiddleOrderButton = By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Заказать']"); // Нижняя кнопка Заказать
     private final By nameField = By.xpath("//input[@placeholder='* Имя']"); // Поле Имя
     private final By lastNameField = By.xpath("//input[@placeholder='* Фамилия']"); // Поле Фамилия
     private final By addressField = By.xpath("//input[@placeholder='* Адрес: куда привезти заказ']"); // Поле адреса
