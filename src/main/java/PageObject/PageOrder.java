@@ -27,7 +27,7 @@ public class PageOrder {
     private final By colourField = By.id("black"); // Чекбокс
     private final By FinishOrderButton = By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Заказать']"); // Кнопка Заказать
     private final By yesButton = By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Да']"); // Кнопка Да
-    private final By orderSuccessModal = By.className("Order_ModalHeader__3FDaJ"); // Окно успешного заказа
+    private final By orderSuccessWindow = By.className("Order_ModalHeader__3FDaJ"); // Окно успешного заказа
     private final By seeTheStatus = By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Посмотреть статус']"); // Кнопка Посмотреть статус
 
     public PageOrder(WebDriver driver) {
@@ -40,8 +40,21 @@ public class PageOrder {
 
     public void ScrollToMiddleButtonAndClick () {
         WebElement MiddleOrderButton = driver.findElement(By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Заказать']"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", MiddleOrderButton); // Скролл до нижней кнопки Заказать
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);"); // Скролл до нижней кнопки Заказать
         MiddleOrderButton.click(); // Кликнули по нижней кнопке Заказать
+    }
+
+    public void clickOrderButton(String type) {
+
+        if (type.equals("top")) {
+            driver.findElement(TopOrderButton).click();
+        }
+
+        if (type.equals("bottom")) {
+            WebElement button = driver.findElement(By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Заказать']"));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", button);
+            button.click();
+        }
     }
 
     public void clickNameField() {
@@ -122,7 +135,7 @@ public class PageOrder {
     }
 
     public String getSuccessText() {
-        return driver.findElement(orderSuccessModal).getText(); // Вернули текст сообщения об успешном оформлении заказа
+        return driver.findElement(orderSuccessWindow).getText(); // Вернули текст сообщения об успешном оформлении заказа
     }
 
     public void clickSeeTheStatus() {

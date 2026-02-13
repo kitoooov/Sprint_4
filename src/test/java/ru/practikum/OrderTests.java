@@ -9,9 +9,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
+import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
+
 
 @RunWith(Parameterized.class)
 public class OrderTests {
@@ -23,39 +23,45 @@ public class OrderTests {
     private final String address;
     private final String metro;
     private final String phone;
+    private String buttonType;
     private PageOrder page;
 
-    public OrderTests(String name, String lastName, String address, String metro, String phone){
+    public OrderTests(String name, String lastName, String address, String metro, String phone, String buttonType){
     this.name = name;
     this.lastName = lastName;
     this.address = address;
     this.metro = metro;
     this.phone = phone;
+    this.buttonType = buttonType;
+
 }
 @Parameterized.Parameters
-public static Object[][] getSuccessfulOrder(){
+public static Object[][] getData(){
     return  new Object[][] {
-                {"Иван", "Иванов", "Пушкина 1", "Черкизовская", "90000000001"},
-                {"Пётр", "Петров", "Лермонтова 2", "Сокольники", "90000000002"} // Тестовые данные
+            {"Иван","Иванов","Пушкина 1","Черкизовская","90000000001","top"},
+            {"Пётр","Петров","Лермонтова 2","Сокольники","90000000002","top"},
+
+            {"Мария","Смирнова","Гоголя 3","Черкизовская","90000000003","bottom"},
+            {"Елена","Кузнецова","Чехова 4","Сокольники","90000000004","bottom"}
+            // Тестовые данные
 
     };
 }
-
-
     @Before
     public void setUp() {
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10)); // Поставии задержку
     }
 
     @Test
-    public void orderFromTopButtonTest() {
+    public void orderFromTopAndMiddleButtonTests() {
         driver.get("https://qa-scooter.praktikum-services.ru");
 
         page = new PageOrder(driver);
 
-        page.clickTopOrderButton();
+        page.clickOrderButton(buttonType);
+
         page.clickNameField();
         page.setNameField(name);
         page.clickLastNameField();
@@ -82,39 +88,6 @@ public static Object[][] getSuccessfulOrder(){
         page.clickSeeTheStatus();
     }
 
-    @Test
-
-    public void orderFromMiddleButtonTest() {
-        driver.get("https://qa-scooter.praktikum-services.ru");
-
-        page = new PageOrder(driver);
-
-        page.ScrollToMiddleButtonAndClick();
-        page.clickNameField();
-        page.setNameField(name);
-        page.clickLastNameField();
-        page.setLastNameField(lastName);
-        page.clickAddressField();
-        page.setAddressField(address);
-        page.clickMetroField();
-        page.setMetroField(metro);
-        page.clickMetroOption();
-        page.clickPhoneField();
-        page.setPhoneField(phone);
-        page.clickNextButton();
-
-        page.clickDate();
-        page.clickChoseDate();
-        page.clickLease();
-        page.clickDropDownMenu();
-        page.clickColour();
-        page.clickFinishOrderButton();
-        page.clickYesButton();
-        String successText = page.getSuccessText();
-        Assert.assertTrue("Заказ не получиось оформить",
-                successText.contains("Заказ оформлен"));
-        page.clickSeeTheStatus();
-    }
 
 
     @After

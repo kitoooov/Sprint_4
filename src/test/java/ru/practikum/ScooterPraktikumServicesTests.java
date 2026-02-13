@@ -1,6 +1,6 @@
 package ru.practikum;
 
-import PageObject.PageWebChromeList;
+import PageObject.PageScooterPraktikumServices;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,14 +14,14 @@ import java.time.Duration;
 
 
     @RunWith(Parameterized.class)
-    public class WebChromeDropDownListTests { // объявили класс
+    public class ScooterPraktikumServicesTests { // объявили класс
 
         private WebDriver driver;
 
         private final int index;
         private final String expectedText;
 
-        public WebChromeDropDownListTests(int index, String expectedText) {
+        public ScooterPraktikumServicesTests(int index, String expectedText) {
             this.index = index;
             this.expectedText = expectedText;
         }
@@ -52,7 +52,7 @@ import java.time.Duration;
         public void dropDownListTest() {
             driver.get("https://qa-scooter.praktikum-services.ru");
 
-            PageWebChromeList page = new PageWebChromeList(driver);
+            PageScooterPraktikumServices page = new PageScooterPraktikumServices(driver);
             page.dropDownListTest(index);
 
 

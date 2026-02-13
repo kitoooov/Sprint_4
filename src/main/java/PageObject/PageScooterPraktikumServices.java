@@ -5,11 +5,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class PageWebChromeList {
+public class PageScooterPraktikumServices {
 
     private WebDriver driver;
 
-    public PageWebChromeList(WebDriver driver) {
+    public PageScooterPraktikumServices(WebDriver driver) {
         this.driver = driver;
     }
 
