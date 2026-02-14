@@ -4,7 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
 
 public class PageOrder {
 
@@ -26,9 +28,9 @@ public class PageOrder {
     private final By dropDownMenu = By.xpath("//div[contains(@class,'Dropdown-option') and text()='двое суток']"); // Выпадающий список срока аренды
     private final By colourField = By.id("black"); // Чекбокс
     private final By FinishOrderButton = By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Заказать']"); // Кнопка Заказать
-    private final By yesButton = By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Да']"); // Кнопка Да
-    private final By orderSuccessWindow = By.className("Order_ModalHeader__3FDaJ"); // Окно успешного заказа
-    private final By seeTheStatus = By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Посмотреть статус']"); // Кнопка Посмотреть статус
+    private final By yesButton = By.xpath("//button[text()='Да']"); // Кнопка Да
+    private final By seeTheStatus = By.xpath("//button[text()='Посмотреть статус']"); // Кнопка Посмотреть статус
+    private final By orderStatus = By.className("Track_Content__St6Kn"); // Страница успешного заказа
 
     public PageOrder(WebDriver driver) {
         this.driver = driver;
@@ -38,7 +40,7 @@ public class PageOrder {
         driver.findElement(TopOrderButton).click(); // Кликнули по верхней кнопке Заказать
     }
 
-    public void ScrollToMiddleButtonAndClick () {
+    public void ScrollToMiddleButtonAndClick() {
         WebElement MiddleOrderButton = driver.findElement(By.xpath("//button[contains(@class,'Button_Middle__1CSJM') and text()='Заказать']"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);"); // Скролл до нижней кнопки Заказать
         MiddleOrderButton.click(); // Кликнули по нижней кнопке Заказать
@@ -131,15 +133,22 @@ public class PageOrder {
     }
 
     public void clickYesButton() {
-        driver.findElement(yesButton).click(); // Клик по кнопке Да
-    }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement yesBtn = wait.until(ExpectedConditions.elementToBeClickable(yesButton));
+        yesBtn.click();
+    } // Клик по кнопке Да
 
-    public String getSuccessText() {
-        return driver.findElement(orderSuccessWindow).getText(); // Вернули текст сообщения об успешном оформлении заказа
-    }
 
     public void clickSeeTheStatus() {
-        driver.findElement(seeTheStatus).click(); // Клик по кнопке Посмотреть статус
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement status = wait.until(ExpectedConditions.visibilityOfElementLocated(seeTheStatus));
+            status.click();
+        }
+
+    public String getStatus() {
+        return driver.findElement(orderStatus).getText(); // Вернули текст сообщения об успешном оформлении заказа
     }
-}
+
+    }
+
 

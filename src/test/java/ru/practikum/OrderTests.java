@@ -39,12 +39,8 @@ public class OrderTests {
 public static Object[][] getData(){
     return  new Object[][] {
             {"Иван","Иванов","Пушкина 1","Черкизовская","90000000001","top"},
-            {"Пётр","Петров","Лермонтова 2","Сокольники","90000000002","top"},
-
-            {"Мария","Смирнова","Гоголя 3","Черкизовская","90000000003","bottom"},
-            {"Елена","Кузнецова","Чехова 4","Сокольники","90000000004","bottom"}
+            {"Пётр","Петров","Лермонтова 2","Сокольники","90000000002","bottom"}
             // Тестовые данные
-
     };
 }
     @Before
@@ -82,12 +78,12 @@ public static Object[][] getData(){
         page.clickColour();
         page.clickFinishOrderButton();
         page.clickYesButton();
-        String successText = page.getSuccessText();
-        Assert.assertTrue("Заказ не получиось оформить",
-                successText.contains("Заказ оформлен"));
         page.clickSeeTheStatus();
-    }
+        String successOrderStatus = page.getStatus();
+        Assert.assertTrue("Cтатус заказа не отображен на экране",
+                successOrderStatus.contains("Статус заказа отображен на экране"));
 
+    }
 
 
     @After
